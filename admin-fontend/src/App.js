@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -16,13 +17,18 @@ import { getInitialData } from './Store/actions/initialData.action';
 function App() {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
-
+    const authenticate = auth.authenticate
+    
+    console.log(auth);
     useEffect(() => {
         if (auth) {
+            console.log(auth);
             dispatch(isUserLoggedIn());
+            dispatch(getInitialData());
+
         }
-        dispatch(getInitialData());
     }, []);
+   
     // useEffect(() => {
     //     dispatch(getAllCategory());
     // }, [Category]);

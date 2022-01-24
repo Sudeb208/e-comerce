@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { userConstants } from '../actions/constants';
+import { userConstants } from '../constants';
 
 const initState = {
     error: null,

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from '../../helpers/axios';
-import { categoryConstants } from './constants';
+import { categoryConstants } from '../constants';
 
 export const getAllCategory = () => {
     return async dispach => {
@@ -15,7 +15,6 @@ export const getAllCategory = () => {
                 });
             }
             console.log(res.data.categories);
-            console.log(dispach);
         } catch (error) {
             dispach({
                 type: categoryConstants.GET_ALL_CATEGORY_FAILURE,
@@ -61,26 +60,46 @@ export const addCategory = form => {
 
 export const updateCategories = form => {
     return async dispatch => {
+        dispatch({ type: categoryConstants.UPDATE_CATEGORY_REQUEST });
         try {
             const res = await axios.post(`category/update`, form);
             if (res.status == 200) {
-                return true;
+                dispatch({
+                    type: categoryConstants.UPDATE_CATEGORY_SUCCESS,
+                    payload: res,
+                });
+                dispatch(getAllCategory());
             }
         } catch (error) {
             console.log(error);
+            dispatch({
+                type: categoryConstants.UPDATE_CATEGORY_FAILURE,
+                payload: {
+                    message: error.response.data.message,
+                },
+            });
         }
     };
 };
 
 export const deleteCategories = form => {
     return async dispatch => {
+        dispatch({ type: categoryConstants.DELETE_CATEGORY_REQUEST });
         try {
             const res = await axios.post(`category/delete`, form);
-            if(res.status == 200){
-                return true
+            if (res.status == 200) {
+                dispatch({
+                    type: categoryConstants.DELETE_CATEGORY_SUCCESS,
+                    payload: res,
+                });
+                dispatch(getAllCategory());
             }
         } catch (error) {
             console.log(error);
+            dispatch({
+                type: categoryConstants.DELETE_CATEGORY_FAILURE,
+                payload: { message: error.response.data.message },
+            });
         }
     };
 };

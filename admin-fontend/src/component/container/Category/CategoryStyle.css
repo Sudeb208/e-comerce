@@ -1,0 +1,13 @@
+.modal-header {
+    padding: 10px 5px;
+}
+.modal-title {
+    margin-left: 10px;
+}
+.modal-footer {
+    padding: 10px 5px;
+}
+.category button {
+    border: none;
+    margin-top: 10px;
+}

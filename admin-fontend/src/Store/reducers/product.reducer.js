@@ -1,4 +1,4 @@
-import { productConstants } from '../actions/constants';
+import { productConstants } from '../constants';
 
 const initState = {
     loading: false,

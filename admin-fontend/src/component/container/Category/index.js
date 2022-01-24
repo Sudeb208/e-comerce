@@ -20,8 +20,14 @@ import {
     IoIosCheckbox,
     IoIosArrowDropright,
     IoIosArrowDropdown,
+    IoIosAddCircleOutline,
+    IoMdAlbums,
+    IoIosFolder,
+    IoIosFolderOpen,
+    IoIosFiling,
 } from 'react-icons/io';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import './CategoryStyle.css';
 
 export default function Category() {
     const [show, setShow] = useState(false);
@@ -40,10 +46,12 @@ export default function Category() {
 
     // CLOSE Modal
     const handleClose = hide => {
-        console.log(hide);
         if (hide == true) {
             setShow(false);
         } else {
+            if (newCategory === '') {
+                window.alert('Category name required');
+            }
             const form = new FormData();
             form.append('name', newCategory);
             form.append('parentId', parentId);
@@ -78,9 +86,7 @@ export default function Category() {
                 form.append('type', item.type ? item.type : '');
                 form.append('parentId', item.parentId ? item.parentId : '');
             });
-            dispatch(updateCategories(form)).then(
-                result => result && dispatch(getAllCategory()),
-            );
+            dispatch(updateCategories(form));
             setupdateCategoryModal(false);
         }
     };
@@ -88,7 +94,7 @@ export default function Category() {
         if (hide == true) {
             setDeleteCateogryModal(false);
         } else {
-            dispatch(deleteCategories({checked})).then(result => result && dispatch(getAllCategory()));
+            dispatch(deleteCategories({ checked }));
             setDeleteCateogryModal(false);
         }
     };
@@ -184,7 +190,7 @@ export default function Category() {
 
     return (
         <Layout name="Layout" sidebar>
-            <Container>
+            <Container className="category">
                 <Row>
                     <Col md={12}>
                         <div
@@ -193,7 +199,10 @@ export default function Category() {
                                 justifyContent: 'space-between',
                             }}>
                             <h3>category</h3>
-                            <button onClick={handleShow}>Add</button>
+                            <button onClick={handleShow}>
+                                <IoIosAddCircleOutline />
+                                <span>Add</span>
+                            </button>
                         </div>
                     </Col>
                 </Row>
@@ -211,6 +220,15 @@ export default function Category() {
                                 halfCheck: <IoIosCheckboxOutline />,
                                 expandClose: <IoIosArrowDropright />,
                                 expandOpen: <IoIosArrowDropdown />,
+                                expandAll: (
+                                    <span className="rct-icon rct-icon-expand-all" />
+                                ),
+                                collapseAll: (
+                                    <span className="rct-icon rct-icon-collapse-all" />
+                                ),
+                                parentClose: <IoIosFolder />,
+                                parentOpen: <IoIosFolderOpen />,
+                                leaf: <IoIosFiling />,
                             }}
                         />
                     </Col>
@@ -228,26 +246,38 @@ export default function Category() {
             <Model
                 title="Add new Category"
                 handleClose={handleClose}
-                show={show}>
-                <Ui
-                    type="text"
-                    placeholder="Add a category"
-                    value={newCategory}
-                    onChange={e => {
-                        setNewCategory(e.target.value);
-                    }}
-                />
-                <select
-                    className="form-control"
-                    value={parentId}
-                    onChange={e => setParentId(e.target.value)}>
-                    <option value="">Select a category</option>
-                    {createCategoryList(state.categories).map(option => (
-                        <option key={option.value} value={option.value}>
-                            {option.name}
-                        </option>
-                    ))}
-                </select>
+                show={show}
+                buttonName="Create Category">
+                <Row>
+                    <Col>
+                        <Ui
+                            type="text"
+                            placeholder="Add a category"
+                            value={newCategory}
+                            onChange={e => {
+                                setNewCategory(e.target.value);
+                            }}
+                        />
+                    </Col>
+                    <Col>
+                        <select
+                            className="form-control"
+                            value={parentId}
+                            onChange={e => setParentId(e.target.value)}>
+                            <option value="">Select a category</option>
+                            {createCategoryList(state.categories).map(
+                                option => (
+                                    <option
+                                        key={option.value}
+                                        value={option.value}>
+                                        {option.name}
+                                    </option>
+                                ),
+                            )}
+                        </select>
+                    </Col>
+                </Row>
+
                 <input
                     type="file"
                     name="category image"
@@ -403,6 +433,7 @@ export default function Category() {
                     onChange={e => setCategoryImg(e.target.files[0])}
                 /> */}
             </Model>
+            {/* delete category modal  */}
             <Model
                 title="Delete category"
                 handleClose={deleteCateogryClose}

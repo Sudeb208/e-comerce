@@ -17,7 +17,6 @@ exports.requireSingin = async (req, res, next) => {
     res.status('400').json({
       message: error.message,
     });
-    console.log(error);
   }
   next();
 };

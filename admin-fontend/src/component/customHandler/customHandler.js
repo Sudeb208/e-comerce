@@ -15,3 +15,15 @@ export const createCategoryList = (categories, options = []) => {
     }
     return options;
 };
+
+export const debounnce = (fn, delay) => {
+    let timeout;
+    return function () {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            fn();
+        }, delay);
+    };
+};

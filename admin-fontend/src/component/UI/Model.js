@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { debounnce } from '../customHandler/customHandler';
 
 function Model(props) {
-    const { show, handleClose, title, children, size, button } =props
-    console.log(props);
+    const { show, handleClose, title, children, size, button, buttonName } =
+        props;
     return (
         <div>
             <Modal
@@ -21,13 +23,15 @@ function Model(props) {
                             <Button
                                 key={index}
                                 variant={item.color}
-                                onClick={ item.onclick}>
+                                onClick={debounnce(item.onclick, 400)}>
                                 {item.label}
                             </Button>
                         ))
                     ) : (
-                        <Button variant="primary" onClick={handleClose}>
-                            Save Changes
+                        <Button
+                            variant="primary"
+                            onClick={debounnce(handleClose, 500)}>
+                            {buttonName ? buttonName : 'Save Changes'}
                         </Button>
                     )}
                 </Modal.Footer>

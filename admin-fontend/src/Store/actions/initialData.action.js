@@ -2,7 +2,7 @@ import {
     categoryConstants,
     initialDataConstants,
     productConstants,
-} from './constants';
+} from '../constants';
 import axios from '../../helpers/axios';
 
 export const getInitialData = () => {

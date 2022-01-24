@@ -1,5 +1,5 @@
 import axios from '../../helpers/axios';
-import { authConstants } from './constants';
+import { authConstants } from '../constants';
 
 export const login = user => {
     console.log(user);
@@ -25,7 +25,7 @@ export const login = user => {
             dispatch({
                 type: authConstants.LOGIN_FAILUR,
                 payload: {
-                    message: error.response.message,
+                    message: error.response,
                 },
             });
         }
@@ -59,7 +59,7 @@ export const signOut = () => {
         try {
             const res = await axios.post('/admin/signout');
             console.log(res);
-            if (res.status === 200) {
+            if (res.status == 200) {
                 localStorage.clear();
                 dispatch({
                     type: authConstants.LOGOUT_SUCCESS,
