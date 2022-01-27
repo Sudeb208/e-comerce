@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Layout from '../../layout';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import Ui from '../../UI';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { signup } from '../../../Store/actions/user.action';
+import Input from '../../UI/Input';
 
 export default function Signup() {
     const [password, setPassword] = useState('');
@@ -43,7 +43,7 @@ export default function Signup() {
                             <Form onSubmit={userSignup}>
                                 <Row>
                                     <Col md="6">
-                                        <Ui
+                                        <Input
                                             name="Frist Name"
                                             type="text"
                                             value={firstName}
@@ -53,7 +53,7 @@ export default function Signup() {
                                         />
                                     </Col>
                                     <Col md="6">
-                                        <Ui
+                                        <Input
                                             name="last Name"
                                             type="text"
                                             value={lastName}
@@ -63,7 +63,7 @@ export default function Signup() {
                                         />
                                     </Col>
                                 </Row>
-                                <Ui
+                                <Input
                                     name="email"
                                     type="email"
                                     value={email}
@@ -71,7 +71,7 @@ export default function Signup() {
                                         setEmail(e.target.value);
                                     }}
                                 />
-                                <Ui
+                                <Input
                                     name="password"
                                     type="password"
                                     value={password}

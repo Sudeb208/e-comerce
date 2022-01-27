@@ -12,6 +12,7 @@ import Category from './component/container/Category';
 import PrivateRouteDefferentWay from './component/HOC/PrivateRouteWithDefferentWay';
 import PrivateRoute from './component/HOC/PrivateRoute';
 import { getInitialData } from './Store/actions/initialData.action';
+import NewPage from './component/container/newPage';
 
 /* eslint-disable react/react-in-jsx-scope */
 function App() {
@@ -21,13 +22,14 @@ function App() {
     
     console.log(auth);
     useEffect(() => {
-        if (auth) {
+        if (auth.authenticate !== true) {
             console.log(auth);
             dispatch(isUserLoggedIn());
-            dispatch(getInitialData());
-
         }
-    }, []);
+        if (auth.authenticate) {
+            dispatch(getInitialData());
+        }
+    }, [auth.authenticate]);
    
     // useEffect(() => {
     //     dispatch(getAllCategory());
@@ -46,6 +48,7 @@ function App() {
                     />
                     <Route path="/*" element={<PrivateRouteDefferentWay />}>
                         <Route path="product" element={<Product />} />
+                        <Route path="page" element={<NewPage />} />
                         <Route path="orders" element={<Order />} />
                         <Route path="category" element={<Category />} />
                     </Route>

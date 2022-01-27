@@ -11,3 +11,18 @@
     border: none;
     margin-top: 10px;
 }
+.actionBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.actionBtn > span {
+    justify-content: center;
+    padding: 10px 5px;
+}
+.actionBtn .btnGroup {
+    justify-content: space-between;
+}
+.actionBtn .btnGroup > button {
+    margin: 10px 5px;
+}

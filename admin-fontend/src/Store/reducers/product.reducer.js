@@ -36,9 +36,15 @@ const productReducer = (state = { initState }, action) => {
             break;
         case productConstants.GET_PRODUCT_SUCCESS:
             state = {
-                ...initState,
+                ...state,
                 loading: false,
                 products: action.payload.products,
+            };
+            break;
+        case productConstants.GET_PRODUCT_FAILURE:
+            state = {
+                ...state,
+                loading: false,
             };
     }
     return state;

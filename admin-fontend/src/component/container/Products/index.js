@@ -7,7 +7,7 @@ import { addProduct } from '../../../Store/actions/product.action';
 import { genaratePublicUrl } from '../../../UrlConfig';
 import { createCategoryList } from '../../customHandler/customHandler';
 import Layout from '../../layout';
-import Ui from '../../UI';
+import Input from '../../UI/Input';
 import Model from '../../UI/Model';
 
 export default function Product() {
@@ -24,8 +24,12 @@ export default function Product() {
 
     const categories = useSelector(state => state.categories);
     const product = useSelector(state => state.products);
+    console.log(product);
 
-    const handleClose = () => {
+    const handleClose = hide => {
+        if (hide) {
+            return setShow(false);
+        }
         const form = new FormData();
         form.append('name', name);
         form.append('quantity', quantity);
@@ -35,8 +39,8 @@ export default function Product() {
         for (let pic of productPicture) {
             form.append('productPicture', pic);
         }
-        setShow(false);
         dispatch(addProduct(form));
+        setShow(false);
     };
     const handleShow = () => {
         setShow(true);
@@ -78,7 +82,7 @@ export default function Product() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {product.products.length > 0
+                                {product.products
                                     ? product.products.map((product, index) => (
                                           <tr key={product._id}>
                                               <td>{index + 1}.</td>
@@ -100,11 +104,12 @@ export default function Product() {
                     </Col>
                 </Row>
             </Container>
+            {/* add product modal */}
             <Model
                 show={show}
                 handleClose={handleClose}
                 title="Add a new product">
-                <Ui
+                <Input
                     label="name"
                     type="text"
                     placeholder="Product Name"
@@ -113,7 +118,7 @@ export default function Product() {
                         setName(e.target.value);
                     }}
                 />
-                <Ui
+                <Input
                     label="quantity"
                     type="number"
                     placeholder="Quantity"
@@ -122,7 +127,7 @@ export default function Product() {
                         setQuantity(e.target.value);
                     }}
                 />
-                <Ui
+                <Input
                     label="Price"
                     type="text"
                     placeholder="Price"
@@ -131,7 +136,7 @@ export default function Product() {
                         setPrice(e.target.value);
                     }}
                 />
-                <Ui
+                <Input
                     type="text"
                     placeholder="Description"
                     value={description}
@@ -166,6 +171,7 @@ export default function Product() {
                     }
                 />
             </Model>
+            {/* show product modal  */}
             <Model
                 show={showProduct}
                 handleClose={showProductclose}
@@ -198,21 +204,31 @@ export default function Product() {
                 <Row>
                     <Col>
                         <label className="key">Product Picture </label>
-                        <div style={{display: 'flex'}}>
-                                {productDatails.productPicture
-                                    ? productDatails.productPicture.map(
-                                          (picture, index) => (
-                                              <div key={index} style={{with:'100px', height: '100px', textAlign: 'center'}}>
-                                                  <img
-                                                      src={genaratePublicUrl(
-                                                          picture.img,
-                                                      )}
-                                                      style={{with:'100%', height: '100%', margin: '5px'}}
-                                                  />
-                                              </div>
-                                          ),
-                                      )
-                                    : null}
+                        <div style={{ display: 'flex' }}>
+                            {productDatails.productPicture
+                                ? productDatails.productPicture.map(
+                                      (picture, index) => (
+                                          <div
+                                              key={index}
+                                              style={{
+                                                  with: '100px',
+                                                  height: '100px',
+                                                  textAlign: 'center',
+                                              }}>
+                                              <img
+                                                  src={genaratePublicUrl(
+                                                      picture.img,
+                                                  )}
+                                                  style={{
+                                                      with: '100%',
+                                                      height: '100%',
+                                                      margin: '5px',
+                                                  }}
+                                              />
+                                          </div>
+                                      ),
+                                  )
+                                : null}
                         </div>
                     </Col>
                 </Row>

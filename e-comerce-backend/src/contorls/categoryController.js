@@ -25,6 +25,7 @@ const createCategory = (categories, parentId = null) => {
       _id: cate._id,
       name: cate.name,
       slug: cate.slug,
+      type: cate.type,
       parentId: cate.parentId,
       children: createCategory(categories, cate._id),
     });
@@ -33,10 +34,11 @@ const createCategory = (categories, parentId = null) => {
 };
 
 exports.addCategory = (req, res) => {
-  const { name, parentId } = req.body;
+  const { name, parentId, type } = req.body;
   const categoryObj = {
     name,
     slug: slugify(name),
+    type,
   };
 
   if (parentId) {
@@ -46,6 +48,8 @@ exports.addCategory = (req, res) => {
     if (req.file.originalname) {
       categoryObj.categoryImage = `${process.env.APINAME}${req.file.filename}`;
     }
+  }else {
+    categoryObj.categoryImage = null;
   }
 
   const cat = new CategoryModel(categoryObj);
@@ -130,7 +134,6 @@ exports.deleteCategories = async (req, res) => {
       return res.status(200).json({ message: 'catagories had deleted' });
     }
   } catch (error) {
-    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };

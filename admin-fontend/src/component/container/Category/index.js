@@ -12,7 +12,6 @@ import {
 } from '../../../Store/actions/category.action';
 import { createCategoryList } from '../../customHandler/customHandler';
 import Layout from '../../layout';
-import Ui from '../../UI';
 import Model from '../../UI/Model';
 import CheckboxTree from 'react-checkbox-tree';
 import {
@@ -25,14 +24,17 @@ import {
     IoIosFolder,
     IoIosFolderOpen,
     IoIosFiling,
+    IoIosCloudUpload,
 } from 'react-icons/io';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import './CategoryStyle.css';
+import Input from '../../UI/Input';
 
 export default function Category() {
     const [show, setShow] = useState(false);
     const [newCategory, setNewCategory] = useState('');
     const [parentId, setParentId] = useState('');
+    const [categoryType, setCategoryType] = useState('');
     const [categoryImg, setCategoryImg] = useState('');
     const [checked, setChecked] = useState([]);
     const [checkedArray, setCheckedArray] = useState([]);
@@ -55,6 +57,7 @@ export default function Category() {
             const form = new FormData();
             form.append('name', newCategory);
             form.append('parentId', parentId);
+            form.append('type', categoryType);
             form.append('categoryImage', categoryImg);
 
             //dispatching
@@ -69,6 +72,7 @@ export default function Category() {
             }
         }
     };
+    console.log(categoryType);
     const updateCateogryClose = hide => {
         if (hide == true) {
             setupdateCategoryModal(false);
@@ -80,6 +84,7 @@ export default function Category() {
                 form.append('type', item.type ? item.type : '');
                 form.append('parentId', item.parentId ? item.parentId : '');
             });
+            console.log(form.type);
             checkedArray.forEach((item, index) => {
                 form.append('_id', item.value);
                 form.append('name', item.name);
@@ -154,6 +159,7 @@ export default function Category() {
                 allCategories.push({
                     label: category.name,
                     value: category._id,
+                    type: category.type,
                     children:
                         category.children.length > 0 &&
                         renderCategories(category.children),
@@ -183,7 +189,8 @@ export default function Category() {
             setCheckedArray(updatedCheckedArry);
         }
     };
-
+    console.log(expandedArray);
+    console.log(checkedArray);
     if (state.loading) {
         return <p>loading</p>;
     }
@@ -199,10 +206,23 @@ export default function Category() {
                                 justifyContent: 'space-between',
                             }}>
                             <h3>category</h3>
-                            <button onClick={handleShow}>
-                                <IoIosAddCircleOutline />
-                                <span>Add</span>
-                            </button>
+                            <div className="actionBtn">
+                                <span>Action: </span>
+                                <div className="btnGroup">
+                                    <button onClick={handleShow}>
+                                        <IoIosAddCircleOutline />
+                                        <span>Add</span>
+                                    </button>
+                                    <button onClick={updateCateogryShow}>
+                                        <IoIosCloudUpload />
+                                        <span>Edit</span>
+                                    </button>
+                                    <button onClick={deleteCategoryShow}>
+                                        <IoIosAddCircleOutline />
+                                        <span>Delete</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </Col>
                 </Row>
@@ -233,12 +253,6 @@ export default function Category() {
                         />
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <button onClick={updateCateogryShow}>Edit</button>
-                        <button onClick={deleteCategoryShow}>Delete</button>
-                    </Col>
-                </Row>
             </Container>
 
             {/* model from react bootstarp */}
@@ -250,7 +264,7 @@ export default function Category() {
                 buttonName="Create Category">
                 <Row>
                     <Col>
-                        <Ui
+                        <Input
                             type="text"
                             placeholder="Add a category"
                             value={newCategory}
@@ -274,6 +288,17 @@ export default function Category() {
                                     </option>
                                 ),
                             )}
+                        </select>
+                    </Col>
+                    <Col>
+                        <select
+                            className="form-control"
+                            value={categoryType}
+                            onChange={e => setCategoryType(e.target.value)}>
+                            <option>select Type </option>
+                            <option value="store">Store </option>
+                            <option value="product"> Product </option>
+                            <option value="page"> Page </option>
                         </select>
                     </Col>
                 </Row>
@@ -300,7 +325,7 @@ export default function Category() {
                     expandedArray.map((item, index) => (
                         <Row key={index}>
                             <Col>
-                                <Ui
+                                <Input
                                     type="text"
                                     placeholder="Edit a category"
                                     value={item.name}
@@ -341,6 +366,7 @@ export default function Category() {
                             <Col>
                                 <select
                                     className="form-control"
+                                    value={item.type}
                                     onChange={e =>
                                         handleCategoryInput(
                                             'type',
@@ -368,7 +394,7 @@ export default function Category() {
                     checkedArray.map((item, index) => (
                         <Row key={index}>
                             <Col>
-                                <Ui
+                                <Input
                                     type="text"
                                     placeholder="Edit a category"
                                     value={item.name}

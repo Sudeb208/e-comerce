@@ -22,6 +22,9 @@ export default function Layout({ children, name, sidebar }) {
                                     <NavLink to="/">Home</NavLink>
                                 </li>
                                 <li>
+                                    <NavLink to="/page">Page</NavLink>
+                                </li>
+                                <li>
                                     <NavLink to="/product">Product</NavLink>
                                 </li>
                                 <li>

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../layout';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import Ui from '../../UI';
 import { login } from '../../../Store/actions/auth.action';
 import { Navigate } from 'react-router-dom';
+import Input from '../../UI/Input';
 
 export default function Signin() {
     const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ export default function Signin() {
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
                             <Form onSubmit={userLogin}>
-                                <Ui
+                                <Input
                                     name="email"
                                     type="email"
                                     value={email}
@@ -39,7 +39,7 @@ export default function Signin() {
                                         setEmail(e.target.value);
                                     }}
                                 />
-                                <Ui
+                                <Input
                                     name="password"
                                     type="password"
                                     value={password}
