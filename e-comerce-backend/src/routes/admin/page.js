@@ -4,7 +4,7 @@ const path = require('path');
 const shortid = require('shortid');
 const { requireSingin, adminMidleware } = require('../../common-middleware/common-middleware');
 
-const { createPage } = require('../../contorls/PageController');
+const { createPage, getPage } = require('../../contorls/PageController');
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -21,5 +21,7 @@ const upload = multer({ storage });
 router.post('/page/create', requireSingin, adminMidleware, upload.fields([
   { name: 'banners' }, { name: 'products' },
 ]), createPage);
+
+router.get('/page/:category/:type', getPage);
 
 module.exports = router;

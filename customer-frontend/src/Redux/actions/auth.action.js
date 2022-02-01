@@ -6,7 +6,7 @@ export const login = user => {
     return async dispatch => {
         dispatch({ type: authConstants.LOGIN_REEQUEST });
         try {
-            const res = await axios.post('/admin/signin', { ...user });
+            const res = await axios.post('/user/signin', { ...user });
             console.log(res);
             if (res.status === 200) {
                 const { token, user } = res.data;

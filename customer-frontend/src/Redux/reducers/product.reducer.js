@@ -6,6 +6,7 @@ const initState = {
     error: '',
     message: '',
     products: [],
+    productPage: {},
     productsByPrice: {
         under5k: [],
         under10k: [],
@@ -37,6 +38,26 @@ const productReducer = (state = initState, action) => {
         case productConstants.GET_PRODUCT_BY_CATEGORY_FAILURE:
             state = {
                 ...state,
+                loading: false,
+                error: action.payload.error,
+            };
+            break;
+        case productConstants.GET_PRODUCT_BY_PAGE_REQUEST:
+            state = {
+                ...state,
+                loading: true,
+            };
+            break;
+        case productConstants.GET_PRODUCT_BY_PAGE_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                productPage: action.payload,
+            };
+            break;
+        case productConstants.GET_PRODUCT_BY_PAGE_FAILURE:
+            state = {
+                ...initState,
                 loading: false,
                 error: action.payload.error,
             };

@@ -18,8 +18,7 @@ import NewPage from './component/container/newPage';
 function App() {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
-    const authenticate = auth.authenticate
-    
+
     console.log(auth);
     useEffect(() => {
         if (auth.authenticate !== true) {
@@ -30,7 +29,7 @@ function App() {
             dispatch(getInitialData());
         }
     }, [auth.authenticate]);
-   
+
     // useEffect(() => {
     //     dispatch(getAllCategory());
     // }, [Category]);

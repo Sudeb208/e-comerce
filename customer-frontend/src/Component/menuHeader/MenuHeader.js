@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
 /* eslint-disable array-callback-return */
 import React, { useEffect } from 'react';
@@ -22,7 +23,11 @@ function MenuHeader() {
                 allCategories.push(
                     <li key={index}>
                         {category.parentId ? (
-                            <Link to={`/${category.slug}`}>{category.name}</Link>
+                            <Link
+                                to={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+                                state={{ cid: 'category._id' }}>
+                                {category.name}
+                            </Link>
                         ) : (
                             <span>{category.name}</span>
                         )}

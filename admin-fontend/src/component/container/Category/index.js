@@ -420,7 +420,7 @@ export default function Category() {
                                             'checked',
                                         )
                                     }>
-                                    <option value="">Select a category</option>
+                                    <option value= { undefined } >Select a category</option>
                                     {createCategoryList(state.categories).map(
                                         option => (
                                             <option

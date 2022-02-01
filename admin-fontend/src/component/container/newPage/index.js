@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,9 +17,19 @@ function NewPage() {
     const [description, setDescription] = useState('');
     const [pageBanner, setPageBanner] = useState([]);
     const [pageProduct, setPageProduct] = useState([]);
+    console.log(pageBanner);
 
     const categories = useSelector(state => state.categories);
     const dispatch = useDispatch();
+
+    const cancelImage = (pic, stateName) => {
+        if (stateName === pageProduct) {
+            setPageProduct(stateName.filter(item => item.name !== pic.name));
+        }
+        stateName === pageBanner
+            ? setPageBanner(stateName.filter(item => item.name !== pic.name))
+            : null;
+    };
 
     const createPageModalClose = hide => {
         if (hide == true) {
@@ -42,16 +53,21 @@ function NewPage() {
     };
 
     const categoryChange = e => {
-        const category = categories.categories.find(
-            category => category._id == e.target.value,
-        );
-        setCategory(e.target.value), setType(category.type);
+        const category = createCategoryList(categories.categories);
+        const findFunction = cateogrys => {
+            return cateogrys.value === e.target.value;
+        };
+        console.log(category);
+        const Id = category.find(cateogrys => {
+            return cateogrys.value === e.target.value;
+        });
+        console.log(Id);
+        setCategory(e.target.value), setType(Id.type);
     };
 
     const createPageModalShow = () => {
         setCreatePageModal(true);
     };
-    console.log(category);
     return (
         <Layout name="Page" sidebar>
             <Container>
@@ -112,6 +128,12 @@ function NewPage() {
                                       src={URL.createObjectURL(pic)}
                                       alt=""
                                   />
+                                  <button
+                                      onClick={() =>
+                                          cancelImage(pic, pageBanner)
+                                      }>
+                                      delete
+                                  </button>
                               </div>
                           ))
                         : null}
@@ -138,11 +160,17 @@ function NewPage() {
                                       src={URL.createObjectURL(pic)}
                                       alt=""
                                   />
+                                  <button
+                                      onClick={() =>
+                                          cancelImage(pic, pageProduct)
+                                      }>
+                                      delete
+                                  </button>
                               </div>
                           ))
                         : null}
                 </div>
-                <input
+                <Input
                     type="file"
                     name="Product Picture"
                     onChange={e =>

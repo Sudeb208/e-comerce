@@ -1,3 +1,5 @@
+/* eslint-disable import/no-anonymous-default-export */
+/* eslint-disable default-case */
 /* eslint-disable no-unused-vars */
 import { userConstants } from '../actions/constants';
 
