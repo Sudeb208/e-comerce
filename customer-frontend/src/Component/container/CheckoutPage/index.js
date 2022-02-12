@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getCartItems } from '../../../Redux/actions/cart.action';
 import { addOrder, getAddress } from '../../../Redux/actions/user.action';
 import Layout from '../../layout/Layout';
@@ -126,7 +127,7 @@ const CheckoutPage = props => {
         setConfirmAddress(true);
         setOrderSummary(true);
     };
-    console.log(auth.user && auth.user.email);
+    const Navigate = useNavigate()
     const selectAddress = addr => {
         //console.log(addr);
         const updatedAddress = address.map(adr =>
@@ -202,7 +203,7 @@ const CheckoutPage = props => {
 
     useEffect(() => {
         if (confirmOrder && user.placedOrderId) {
-            props.history.push(`/order_details/${user.placedOrderId}`);
+            Navigate(`/order_details/${user.placedOrderId}`);
         }
     }, [user.placedOrderId]);
 

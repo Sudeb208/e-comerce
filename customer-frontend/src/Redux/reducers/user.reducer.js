@@ -24,7 +24,7 @@ export default (state = initState, action) => {
             };
             break;
         case userConstants.USER_REGISTER_SUCCESS:
-            state = {
+            state = { 
                 ...state,
                 loading: false,
                 message: action.payload.message,
