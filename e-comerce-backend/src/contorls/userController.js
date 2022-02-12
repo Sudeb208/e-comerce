@@ -58,7 +58,7 @@ exports.signin = (req, res) => {
       }
       if (user) {
         const password = await bcrypt.compare(req.body.password, user.hash_password);
-        if (password) {
+        if (password && user.role === 'user') {
           const {
             _id, firstName, lastName, email, role, fullName,
           } = user;
@@ -77,12 +77,12 @@ exports.signin = (req, res) => {
             },
           });
         } else {
-          return res.status('400').json({
+          return res.status(500).json({
             message: 'invalid username or password',
           });
         }
       } else {
-        return res.status('400').json({
+        return res.status(500).json({
           message: 'something went worng',
         });
       }

@@ -44,3 +44,22 @@ export const getPageProduct = params => {
         }
     };
 };
+export const getSingleProduct = params => {
+    return async dispatch => {
+        try {
+            dispatch({ type: productConstants.GET_PRODUCT_SINGLE_REQUEST });
+            const res = await axios.get(`/products/${params}`);
+            if (res.status === 200) {
+                dispatch({
+                    type: productConstants.GET_PRODUCT_SINGLE_SUCCESS,
+                    payload: res.data.product,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: productConstants.GET_PRODUCT_SINGLE_FAILURE,
+                payload: error.response.data,
+            });
+        }
+    };
+};

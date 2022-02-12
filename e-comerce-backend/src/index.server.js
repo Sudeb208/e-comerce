@@ -17,6 +17,7 @@ const productRoute = require('./routes/product');
 const cartRoute = require('./routes/cart');
 const initialDataRoute = require('./routes/admin/initialData');
 const pageRoute = require('./routes/admin/page');
+const addressRoute = require('./routes/address');
 
 // middleware
 App.use(cors());
@@ -30,6 +31,7 @@ App.use('/api', productRoute);
 App.use('/api', cartRoute);
 App.use('/api', initialDataRoute);
 App.use('/api', pageRoute);
+App.use('/api', addressRoute);
 
 App.get('/', (req, res) => {
   res.status(200).json({

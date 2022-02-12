@@ -61,7 +61,7 @@ exports.signin = (req, res) => {
           _id, firstName, lastName, email, role, fullName,
         } = user;
         const password = await bcrypt.compare(req.body.password, user.hash_password);
-        if (password) {
+        if (password && user.role === 'admin') {
           const token = jwt.sign(
             // eslint-disable-next-line no-underscore-dangle
             { _id, role },

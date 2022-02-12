@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPageProduct } from '../../../Redux/actions';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import Card from '../../UI/Card';
+import { Link } from 'react-router-dom';
 import { genaratePublicUrl } from '../../../UrlConfig';
 
 function PageProduct({ params }) {
@@ -39,7 +39,11 @@ function PageProduct({ params }) {
                     ))}
             </Carousel>
             {products.products.map(product => (
-                <div key={product._id} className="productContainer">
+                <Link
+                    to={`/${product.slug}/${product._id}/p`}
+                    key={product._id}
+                    style={{ display: 'block' }}
+                    className="productContainer">
                     <div className="productImgContainer">
                         <img
                             src={genaratePublicUrl(
@@ -54,7 +58,7 @@ function PageProduct({ params }) {
                         <span>3455</span>
                         <div className="productPrice">{product.price}</div>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     );

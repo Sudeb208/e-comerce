@@ -128,3 +128,11 @@ export const DropdownMenu = props => {
         </div>
     );
 };
+
+export const Anchor = props => {
+    return (
+        <button {...props} className="anchorButton">
+            {props.name}
+        </button>
+    );
+};

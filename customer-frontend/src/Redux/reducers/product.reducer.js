@@ -15,6 +15,7 @@ const initState = {
         under30k: [],
         upper30k: [],
     },
+    productDetails: {},
 };
 
 const productReducer = (state = initState, action) => {
@@ -60,6 +61,26 @@ const productReducer = (state = initState, action) => {
                 ...initState,
                 loading: false,
                 error: action.payload.error,
+            };
+            break;
+        case productConstants.GET_PRODUCT_SINGLE_REQUEST:
+            state = {
+                ...state,
+                loading: true,
+            };
+            break;
+        case productConstants.GET_PRODUCT_SINGLE_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                productDetails: action.payload,
+            };
+            break;
+        case productConstants.GET_PRODUCT_SINGLE_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload,
             };
     }
     return state;

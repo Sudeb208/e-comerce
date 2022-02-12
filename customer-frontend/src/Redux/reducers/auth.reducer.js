@@ -29,7 +29,7 @@ export default (state = { initState }, action) => {
             break;
         case authConstants.LOGIN_SUCCESS:
             state = {
-                user: action.payload.user,
+                user: action.payload.userDetails,
                 token: action.payload.token,
                 authenticate: true,
                 authenticating: false,

@@ -4,7 +4,12 @@ const shortid = require('shortid');
 const path = require('path');
 
 const { requireSingin, adminMidleware } = require('../common-middleware/common-middleware');
-const { createProduct, getProduct, getProductByCategory } = require('../contorls/productController');
+const {
+  createProduct,
+  getProduct,
+  getProductByCategory,
+  getProductById,
+} = require('../contorls/productController');
 
 // const { addCategory, getCategories } = require('../contorls/categoryController');
 
@@ -30,5 +35,6 @@ router.post(
 );
 router.get('/product', getProduct);
 router.get('/product/:category', getProductByCategory);
+router.get('/products/:id', getProductById);
 
 module.exports = router;

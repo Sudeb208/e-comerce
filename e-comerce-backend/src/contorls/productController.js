@@ -94,3 +94,17 @@ exports.getProductByCategory = async (req, res) => {
     }
   });
 };
+
+exports.getProductById = async (req, res) => {
+  console.log(req.params);
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (product === null) {
+      return res.status(500).json({ error: 'no page available' });
+    }
+    return res.status(200).json({ product });
+  } catch (error) {
+    return res.status(500).json({ msg: 'product not found' });
+  }
+};

@@ -36,12 +36,12 @@ export const isUserLoggedIn = () => {
         const token = localStorage.getItem('token');
         if (token) {
             const user = localStorage.getItem('user');
-            console.log(user);
+            const userDetails = JSON.parse(user)
             dispatch({
                 type: authConstants.LOGIN_SUCCESS,
                 payload: {
                     token,
-                    user,
+                    userDetails,
                 },
             });
         } else {

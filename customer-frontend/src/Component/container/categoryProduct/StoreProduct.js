@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import './style.css';
 import { genaratePublicUrl } from '../../../UrlConfig';
+import { Link } from 'react-router-dom';
 
 const StoreProduct = props => {
     const product = useSelector(state => state.products);
@@ -24,7 +25,11 @@ const StoreProduct = props => {
                 </div>
                 <div style={{ display: 'flex' }}>
                     {product.products.map(product => (
-                        <div key={product._id} className="productContainer">
+                        <Link
+                            to={`/${product.slug}/${product._id}/p`}
+                            style={{ display: 'block' }}
+                            key={product._id}
+                            className="productContainer">
                             <div className="productImgContainer">
                                 <img
                                     src={genaratePublicUrl(
@@ -43,7 +48,7 @@ const StoreProduct = props => {
                                     {product.price}
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -59,7 +64,10 @@ const StoreProduct = props => {
                         </div>
                         <div>
                             {product.productsByPrice[key].map(product => (
-                                <div className="productContainer">
+                                <Link
+                                    to={`/${product.slug}/${product._id}/p`}
+                                    style={{ display: 'block' }}
+                                    className="productContainer">
                                     <div className="productImgContainer">
                                         <img
                                             src={genaratePublicUrl(
@@ -78,7 +86,7 @@ const StoreProduct = props => {
                                             {product.price}
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
